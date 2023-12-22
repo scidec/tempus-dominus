@@ -418,13 +418,13 @@ class TempusDominus {
       newConfig.restrictions.maxDate &&
       this.viewDate.isAfter(newConfig.restrictions.maxDate)
     )
-      this.viewDate = newConfig.restrictions.maxDate;
+      this.viewDate = newConfig.restrictions.maxDate.clone;
 
     if (
       newConfig.restrictions.minDate &&
       this.viewDate.isBefore(newConfig.restrictions.minDate)
     )
-      this.viewDate = newConfig.restrictions.minDate;
+      this.viewDate = newConfig.restrictions.minDate.clone;
   }
 
   /**
@@ -646,7 +646,7 @@ const extend = function (plugin, option = undefined) {
   return tempusDominus;
 };
 
-const version = '6.7.19';
+const version = '6.9.4';
 
 const tempusDominus = {
   TempusDominus,
