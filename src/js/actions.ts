@@ -197,9 +197,11 @@ export default class Actions {
         break;
     }
 
-    (<HTMLElement>(
-      this.display.widget.getElementsByClassName(classToUse)[0]
-    )).style.display = 'grid';
+    const element = this.display.widget.getElementsByClassName(
+      classToUse
+    )[0] as HTMLElement;
+    element.style.display = 'grid';
+    (<HTMLElement>element.children[0])?.focus();
   }
 
   private handleNextPrevious(action: ActionTypes) {
@@ -313,6 +315,10 @@ export default class Actions {
       )
       .forEach((htmlElement: HTMLElement) => Collapse.toggle(htmlElement));
     this._eventEmitters.viewUpdate.emit();
+    const visible = this.display.widget.querySelector(
+      `.${Namespace.css.collapsing} > div[style*="display: grid"]`
+    ) as HTMLElement;
+    visible?.focus();
   }
 
   private handleSelectDay(currentTarget: HTMLElement) {
@@ -345,7 +351,6 @@ export default class Actions {
 
   private handleMultiDate(day: DateTime) {
     let index = this.dates.pickedIndex(day, Unit.date);
-    console.log(index);
     if (index !== -1) {
       this.dates.setValue(null, index); //deselect multi-date
     } else {
